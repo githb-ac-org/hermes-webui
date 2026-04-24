@@ -418,7 +418,7 @@ function _applyReasoningChip(eff){
   if(!wrap||!label) return;
   if(!eff||eff==='none'){wrap.style.display='none';return;}
   wrap.style.display='';
-  label.textContent='🧠 '+eff;
+  label.textContent=eff;
   _highlightReasoningOption(eff);
 }
 
@@ -452,7 +452,21 @@ function toggleReasoningDropdown(){
   closeModelDropdown();
   _highlightReasoningOption(_currentReasoningEffort);
   dd.classList.add('open');
+  _positionReasoningDropdown();
   chip.classList.add('active');
+}
+
+function _positionReasoningDropdown(){
+  const dd=$('composerReasoningDropdown');
+  const chip=$('composerReasoningChip');
+  const footer=document.querySelector('.composer-footer');
+  if(!dd||!chip||!footer) return;
+  const chipRect=chip.getBoundingClientRect();
+  const footerRect=footer.getBoundingClientRect();
+  let left=chipRect.left-footerRect.left;
+  const maxLeft=Math.max(0,footer.clientWidth-dd.offsetWidth);
+  left=Math.max(0,Math.min(left,maxLeft));
+  dd.style.left=`${left}px`;
 }
 
 function closeReasoningDropdown(){

@@ -2252,7 +2252,7 @@ async function loadSettingsPanel(){
     const wsPanelCb=$('settingsWorkspacePanelOpen');
     if(wsPanelCb){
       wsPanelCb.checked=localStorage.getItem('hermes-webui-workspace-panel-pref')==='open';
-      wsPanelCb.addEventListener('change',function(){
+      wsPanelCb.onchange=function(){
         const open=this.checked;
         localStorage.setItem('hermes-webui-workspace-panel-pref',open?'open':'closed');
         // Also sync the runtime key so the current session reflects the change
@@ -2260,7 +2260,7 @@ async function loadSettingsPanel(){
         document.documentElement.dataset.workspacePanel=open?'open':'closed';
         if(open&&_workspacePanelMode==='closed') openWorkspacePanel('browse');
         else if(!open&&_workspacePanelMode!=='closed') toggleWorkspacePanel(false);
-      });
+      };
     }
     const resolvedLanguage=(typeof resolvePreferredLocale==='function')
       ? resolvePreferredLocale(settings.language, localStorage.getItem('hermes-lang'))
